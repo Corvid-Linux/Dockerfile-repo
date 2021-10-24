@@ -1,12 +1,18 @@
 FROM debian
-RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
+RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
 RUN git clone https://github.com/Ashraf-wan/Corvid
+RUN sudo apt install software-properties-common apt-transport-https curl
+RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+RUN sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+RUN sudo apt update && sudo apt install code -y
 WORKDIR "/Corvid"
 RUN rm ~/.bashrc
 RUN mv .bashrc ~
 RUN mv logo /etc
 RUN rm /etc/os-release
 RUN mv os-release /etc
+RUN chmod +x cutefish.sh
+RUN ./cutefish.sh
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -100,12 +106,6 @@ RUN git clone https://github.com/vanhauser-thc/thc-hydra
 RUN git clone https://github.com/sullo/nikto
 RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/powershell_7.1.5-1.debian.10_amd64.deb
 RUN dpkg -i powershell_7.1.5-1.debian.10_amd64.deb
-RUN sudo apt-get update
-RUN sudo apt-get install -y apt-transport-https
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN	sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsoft-debian-stretch-prod stretch main" > /etc/apt/sources.list.d/microsoft.list'
-RUN sudo apt-get update
-RUN	sudo apt-get install -y powershell
 WORKDIR "/root/tools"
 RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:cabelo.list
 RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
@@ -136,21 +136,12 @@ WORKDIR "LibreOffice_7.2.2.2_Linux_x86-64_deb/DEBS"
 RUN dpkg -i *.deb
 WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
-RUN git clone https://github.com/cutefishos/terminal
-RUN git clone https://github.com/cutefishos/dock
-RUN git clone https://github.com/cutefishos/filemanager
-RUN git clone https://github.com/cutefishos/settings
-WORKDIR "/root/toolsterminal"
-RUN sudo apt install extra-cmake-modules qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev -y && mkdir build && cd build && cmake .. && make && make install
-WORKDIR "/root/tools/filmanager"
-RUN sudo apt install equivs curl git devscripts lintian build-essential automake autotools-dev --no-install-recommends -y && sudo mk-build-deps -i -t "apt-get --yes" -r && mkdir build && cd build  && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make
-WORKDIR "/root/tools/settings"
-RUN sudo apt install -y cmake debhelper extra-cmake-modules libicu-dev libcrypt-dev libfreetype6-dev libfontconfig1-dev libkf5networkmanagerqt-dev modemmanager-qt-dev qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev qttools5-dev-tools qml-module-qtquick-controls2 qml-module-qtquick2 qml-module-qtquick-layouts qml-module-qt-labs-platform qml-module-qt-labs-settings qml-module-qtqml qml-module-qtquick-window2 qml-module-qtquick-shapes qml-module-qtquick-dialogs qml-module-qtquick-particles2
-RUN mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make && sudo make install
-WORKDIR "/"
 RUN apt-get clean
 CMD start
 WORKDIR "/Corvid"
 RUN rm -r /usr/share/backgrounds/xfce
 RUN mkdir /usr/share/backgrounds/xfce
 RUN mv corvidos.png /usr/share/backgrounds/xfce
+WORKDIR "/root/tools"
+RUN rm powershell_7.1.5-1.debian.10_amd64.deb
+WORKDIR "/root"
