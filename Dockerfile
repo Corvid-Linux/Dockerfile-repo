@@ -141,12 +141,12 @@ RUN git clone https://github.com/cutefishos/dock
 RUN git clone https://github.com/cutefishos/filemanager
 RUN git clone https://github.com/cutefishos/settings
 WORKDIR "/root/toolsterminal"
-RUN sudo apt install extra-cmake-modules qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev && mkdir build && cd build && cmake .. && make && make install
+RUN sudo apt install extra-cmake-modules qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev -y && mkdir build && cd build && cmake .. && make && make install
 WORKDIR "/root/tools/filmanager"
-RUN sudo apt install equivs curl git devscripts lintian build-essential automake autotools-dev --no-install-recommends && sudo mk-build-deps -i -t "apt-get --yes" -r && mkdir build && cd build  && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make
+RUN sudo apt install equivs curl git devscripts lintian build-essential automake autotools-dev --no-install-recommends -y && sudo mk-build-deps -i -t "apt-get --yes" -r && mkdir build && cd build  && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make
 WORKDIR "/root/tools/settings"
-RUN sudo apt install cmake debhelper extra-cmake-modules libicu-dev libcrypt-dev libfreetype6-dev libfontconfig1-dev libkf5networkmanagerqt-dev modemmanager-qt-dev qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev qttools5-dev-tools qml-module-qtquick-controls2 qml-module-qtquick2 qml-module-qtquick-layouts qml-module-qt-labs-platform qml-module-qt-labs-settings qml-module-qtqml qml-module-qtquick-window2 qml-module-qtquick-shapes qml-module-qtquick-dialogs qml-module-qtquick-particles2
-RUN mkdir build &&cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make && sudo make install
+RUN sudo apt install -y cmake debhelper extra-cmake-modules libicu-dev libcrypt-dev libfreetype6-dev libfontconfig1-dev libkf5networkmanagerqt-dev modemmanager-qt-dev qtbase5-dev qtdeclarative5-dev qtquickcontrols2-5-dev qttools5-dev qttools5-dev-tools qml-module-qtquick-controls2 qml-module-qtquick2 qml-module-qtquick-layouts qml-module-qt-labs-platform qml-module-qt-labs-settings qml-module-qtqml qml-module-qtquick-window2 qml-module-qtquick-shapes qml-module-qtquick-dialogs qml-module-qtquick-particles2
+RUN mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr .. && make && sudo make install
 WORKDIR "/"
 RUN apt-get clean
 CMD start
