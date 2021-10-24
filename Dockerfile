@@ -136,12 +136,11 @@ WORKDIR "LibreOffice_7.2.2.2_Linux_x86-64_deb/DEBS"
 RUN dpkg -i *.deb
 WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
-RUN apt-get clean
 CMD start
-WORKDIR "/Corvid"
-RUN rm -r /usr/share/backgrounds/xfce
-RUN mkdir /usr/share/backgrounds/xfce
-RUN mv corvidos.png /usr/share/backgrounds/xfce
+# cleanup & adding stuff
+RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 WORKDIR "/root"
+RUN /usr/sbin/useradd corvid
+RUN echo corvid | passwd corvid --stdin
