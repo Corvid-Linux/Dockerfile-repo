@@ -1,7 +1,7 @@
 FROM debian
 RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
 RUN git clone https://github.com/Ashraf-wan/Corvid
-RUN sudo apt install software-properties-common apt-transport-https curl
+RUN sudo apt install software-properties-common apt-transport-https curl -y
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 RUN sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
 RUN sudo apt update && sudo apt install code -y
