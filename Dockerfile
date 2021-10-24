@@ -142,5 +142,4 @@ RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 WORKDIR "/root"
-RUN /usr/sbin/useradd corvid
-RUN echo corvid | passwd corvid --stdin
+RUN useradd -m -p pakXq6/z0Zcdk corvid
