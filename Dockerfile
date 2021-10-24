@@ -111,6 +111,21 @@ RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/conf
 RUN chmod 755 msfinstall
 WORKDIR "/root/thc-hydra"
 RUN ./configure && make && make install
+RUN GITLEAKS_VERSION=$(curl -s https://api.github.com/repos/zricethezav/gitleaks/releases/latest |  grep -oP '"tag_name": "\K(.*)(?=")') && wget https://github.com/zricethezav/gitleaks/releases/download/$GITLEAKS_VERSION/gitleaks-linux-amd64
+RUN mv gitleaks-linux-amd64 gitleaks
+RUN chmod +x gitleaks
+RUN sudo mv gitleaks /usr/local/bin/
+RUN git clone https://github.com/RhinoSecurityLabs/pacu
+RUN git clone https://github.com/RhinoSecurityLabs/CVEs
+RUN git clone https://github.com/RhinoSecurityLabs/CloudScraper
+RUN git clone https://github.com/RhinoSecurityLabs/dsnap
+RUN git clone https://github.com/RhinoSecurityLabs/GCP-IAM-Privilege-Escalation
+RUN git clone https://github.com/RhinoSecurityLabs/GCPBucketBrute
+RUN git clone https://github.com/RhinoSecurityLabs/external_c2_framework
+RUN git clone https://github.com/RhinoSecurityLabs/GCPBucketBrute
+RUN git clone https://github.com/RhinoSecurityLabs/ccat 
+RUN git clone https://github.com/RhinoSecurityLabs/Swagger-EZ
+RUN git clone https://github.com/RhinoSecurityLabs/SleuthQL
 WORKDIR "/"
 RUN apt-get clean
 WORKDIR "/Corvid"
