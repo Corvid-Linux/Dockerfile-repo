@@ -1,13 +1,12 @@
 FROM debian
-RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr unzip make gcc g++ terminator tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
+RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
 RUN git clone https://github.com/Ashraf-wan/Corvid
 WORKDIR "/Corvid"
 RUN rm ~/.bashrc
 RUN mv .bashrc ~
 RUN mv logo /etc
-RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
-RUN chmod 755 msfinstall
-RUN apt-get clean
+RUN rm /etc/os-release
+RUN mv os-release /etc
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -96,8 +95,26 @@ RUN git clone https://github.com/FaarisAnsari/nord-dotfiles
 RUN git clone https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 RUN git clone https://github.com/Z4nzu/hackingtool
 RUN git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/ && pip3 install -r setoolkit/requirements.txt && python3 setoolkit/setup.py
-RUN git clonehttps://github.com/vanhauser-thc/thc-hydra
+RUN git clone https://github.com/vanhauser-thc/thc-hydra
+RUN git clone https://github.com/sullo/nikto
+RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/powershell_7.1.5-1.debian.10_amd64.deb
+RUN dpkg -i powershell_7.1.5-1.debian.10_amd64.deb
+RUN git clone https://github.com/EmpireProject/Empire
+WORKDIR "/root/Empire"
+RUN ./setup/install.sh
+WORKDIR "/root"
+RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:cabelo.list
+RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
+RUN apt update
+RUN apt install owasp-zap
+RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
+RUN chmod 755 msfinstall
 WORKDIR "/root/thc-hydra"
 RUN ./configure && make && make install
 WORKDIR "/"
+RUN apt-get clean
+WORKDIR "/Corvid"
+RUN rm -r /usr/share/backgrounds/xfce
+RUN mkdir /usr/share/backgrounds/xfce
+RUN mv corvidos.png /usr/share/backgrounds/xfce
 CMD start
