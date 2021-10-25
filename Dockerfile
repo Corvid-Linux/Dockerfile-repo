@@ -1,10 +1,10 @@
 FROM debian:bullseye
-RUN apt update && apt-get install -y --no-install-recommends sudo wget curl python git python3-pip tightvncserver zsh locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster vim nmap lynis aircrack-ng apktool
+RUN apt update && apt install -y --no-install-recommends sudo wget curl python git python3-pip tightvncserver zsh locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster vim nmap lynis aircrack-ng apktool
 RUN git clone https://github.com/Ashraf-wan/Corvid
-RUN sudo apt install software-properties-common apt-transport-https curl -y
+RUN apt install software-properties-common apt-transport-https -y
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-RUN sudo apt update && sudo apt install code -y
+RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+RUN apt update && apt install code -y
 WORKDIR "/Corvid"
 RUN rm ~/.bashrc
 RUN mv .bashrc ~
@@ -74,8 +74,8 @@ RUN git clone https://github.com/sullo/nikto
 RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/powershell_7.1.5-1.debian.10_amd64.deb
 RUN dpkg -i powershell_7.1.5-1.debian.10_amd64.deb
 WORKDIR "/root/tools"
-RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:cabelo.list
-RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
+RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | tee /etc/apt/sources.list.d/home:cabelo.list
+RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
 RUN apt update
 RUN apt install owasp-zap
 RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
