@@ -1,5 +1,5 @@
-FROM debian
-RUN apt update && apt-get install -y --no-install-recommends sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit
+FROM debian:bullseye
+RUN apt update && apt-get install -y --no-install-recommends sudo wget curl python git python3-pip tightvncserver zsh locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster vim nmap lynis aircrack-ng apktool
 RUN git clone https://github.com/Ashraf-wan/Corvid
 RUN sudo apt install software-properties-common apt-transport-https curl -y
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -11,8 +11,6 @@ RUN mv .bashrc ~
 RUN mv logo /etc
 RUN rm /etc/os-release
 RUN mv os-release /etc
-RUN chmod +x cutefish.sh
-RUN ./cutefish.sh
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -26,29 +24,7 @@ RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       libgtk-3-bin \
       libpulse0 \
-      mousepad \
-      xfce4-notifyd \
-      xfce4-taskmanager \
-      xfce4-terminal && \
-    env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      xfce4-battery-plugin \
-      xfce4-clipman-plugin \
-      xfce4-cpufreq-plugin \
-      xfce4-cpugraph-plugin \
-      xfce4-diskperf-plugin \
-      xfce4-datetime-plugin \
-      xfce4-fsguard-plugin \
-      xfce4-genmon-plugin \
-      xfce4-indicator-plugin \
-      xfce4-netload-plugin \
-      xfce4-places-plugin \
-      xfce4-sensors-plugin \
-      xfce4-smartbookmark-plugin \
-      xfce4-systemload-plugin \
-      xfce4-timer-plugin \
-      xfce4-verve-plugin \
-      xfce4-weather-plugin \
-      xfce4-whiskermenu-plugin && \
+      xfce4-notifyd &&
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       libxv1 \
       mesa-utils \
@@ -80,28 +56,19 @@ startxfce4\n\
 chmod +x /usr/local/bin/start
     
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      konsole \
       kwrite \
       libcups2 \
       libpulse0 \
       procps \
       psmisc \
-      sudo \
       synaptic \
-      systemsettings \
-      zsh \
-      yakuake \
-      screen \
-      pulseaudio \
-      guake 
+      systemsettings
 WORKDIR "/root"
 RUN mkdir tools
 WORKDIR "/root/tools"
-RUN curl -fsSL https://raw.githubusercontent.com/khanhas/spicetify-cli/master/install.sh | sh
-RUN git clone https://github.com/FaarisAnsari/nord-dotfiles
 RUN git clone https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 RUN git clone https://github.com/Z4nzu/hackingtool
-RUN git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/ && pip3 install -r setoolkit/requirements.txt && python3 setoolkit/setup.py
+RUN git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
 RUN git clone https://github.com/vanhauser-thc/thc-hydra
 RUN git clone https://github.com/sullo/nikto
 RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/powershell_7.1.5-1.debian.10_amd64.deb
@@ -143,7 +110,7 @@ WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 WORKDIR "/root"
 RUN useradd -m -p pakXq6/z0Zcdk corvid
-RUN sudo du -h --max-depth=1
+RUN du -h --max-depth=1
 RUN rm -r /tools/LibreOffice_7.2.2.2_Linux_x86-64_deb
 #change wallpaper and theme
 #use the docker commit
