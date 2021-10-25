@@ -1,16 +1,5 @@
-FROM debian:bullseye
-RUN apt update && apt install -y --no-install-recommends sudo wget curl python git python3-pip tightvncserver zsh locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster vim nmap lynis aircrack-ng apktool
-RUN git clone https://github.com/Ashraf-wan/Corvid
-RUN apt install software-properties-common apt-transport-https -y
-RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-RUN add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-RUN apt update && apt install code -y
-WORKDIR "/Corvid"
-RUN rm ~/.bashrc
-RUN mv .bashrc ~
-RUN mv logo /etc
-RUN rm /etc/os-release
-RUN mv os-release /etc
+FROM debian
+RUN apt update && apt install --no-install-recommends sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -24,7 +13,29 @@ RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       libgtk-3-bin \
       libpulse0 \
-      xfce4-notifyd &&
+      mousepad \
+      xfce4-notifyd \
+      xfce4-taskmanager \
+      xfce4-terminal && \
+    env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      xfce4-battery-plugin \
+      xfce4-clipman-plugin \
+      xfce4-cpufreq-plugin \
+      xfce4-cpugraph-plugin \
+      xfce4-diskperf-plugin \
+      xfce4-datetime-plugin \
+      xfce4-fsguard-plugin \
+      xfce4-genmon-plugin \
+      xfce4-indicator-plugin \
+      xfce4-netload-plugin \
+      xfce4-places-plugin \
+      xfce4-sensors-plugin \
+      xfce4-smartbookmark-plugin \
+      xfce4-systemload-plugin \
+      xfce4-timer-plugin \
+      xfce4-verve-plugin \
+      xfce4-weather-plugin \
+      xfce4-whiskermenu-plugin && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       libxv1 \
       mesa-utils \
@@ -54,15 +65,18 @@ you might want to add option --composite.' >&2\n\
 startxfce4\n\
 " > /usr/local/bin/start && \
 chmod +x /usr/local/bin/start
-    
+
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       kwrite \
       libcups2 \
       libpulse0 \
       procps \
       psmisc \
+      sudo \
       synaptic \
-      systemsettings
+      systemsettings \
+      pulseaudio
+
 WORKDIR "/root"
 RUN mkdir tools
 WORKDIR "/root/tools"
@@ -73,16 +87,12 @@ RUN git clone https://github.com/vanhauser-thc/thc-hydra
 RUN git clone https://github.com/sullo/nikto
 RUN wget https://github.com/PowerShell/PowerShell/releases/download/v7.1.5/powershell_7.1.5-1.debian.10_amd64.deb
 RUN dpkg -i powershell_7.1.5-1.debian.10_amd64.deb
-WORKDIR "/root/tools"
-RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | tee /etc/apt/sources.list.d/home:cabelo.list
-RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
+RUN echo 'deb http://download.opensuse.org/repositories/home:/cabelo/Debian_11/ /' | sudo tee /etc/apt/sources.list.d/home:cabelo.list
+RUN curl -fsSL https://download.opensuse.org/repositories/home:cabelo/Debian_11/Release.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/home_cabelo.gpg > /dev/null
 RUN apt update
 RUN apt install owasp-zap
 RUN curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall
 RUN chmod 755 msfinstall
-WORKDIR "/root/tools/thc-hydra"
-RUN ./configure && make && make install
-WORKDIR "/root/tools"
 RUN GITLEAKS_VERSION=$(curl -s https://api.github.com/repos/zricethezav/gitleaks/releases/latest |  grep -oP '"tag_name": "\K(.*)(?=")') && wget https://github.com/zricethezav/gitleaks/releases/download/$GITLEAKS_VERSION/gitleaks-linux-amd64
 RUN mv gitleaks-linux-amd64 gitleaks
 RUN chmod +x gitleaks
@@ -94,7 +104,7 @@ RUN git clone https://github.com/RhinoSecurityLabs/dsnap
 RUN git clone https://github.com/RhinoSecurityLabs/GCP-IAM-Privilege-Escalation
 RUN git clone https://github.com/RhinoSecurityLabs/external_c2_framework
 RUN git clone https://github.com/RhinoSecurityLabs/GCPBucketBrute
-RUN git clone https://github.com/RhinoSecurityLabs/ccat 
+RUN git clone https://github.com/RhinoSecurityLabs/ccat
 RUN git clone https://github.com/RhinoSecurityLabs/Swagger-EZ
 RUN git clone https://github.com/RhinoSecurityLabs/SleuthQL
 RUN wget https://download.documentfoundation.org/libreoffice/stable/7.2.2/deb/x86_64/LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
@@ -104,13 +114,11 @@ RUN dpkg -i *.deb
 WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
 CMD start
-# cleanup & adding new user so vscode dont crash
+# cleanup & adding stuff
 RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
+RUN rm -r LibreOffice_7.2.2.2_Linux_x86-64_deb
 WORKDIR "/root"
 RUN useradd -m -p pakXq6/z0Zcdk corvid
 RUN du -h --max-depth=1
-RUN rm -r /tools/LibreOffice_7.2.2.2_Linux_x86-64_deb
-#change wallpaper and theme
-#use the docker commit
