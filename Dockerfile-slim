@@ -1,4 +1,4 @@
-FROM debian:bulleyes
+FROM debian:bullseye
 RUN apt update && apt-get install -y --no-install-recommends sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit
 RUN git clone https://github.com/Ashraf-wan/Corvid
 WORKDIR "/Corvid"
