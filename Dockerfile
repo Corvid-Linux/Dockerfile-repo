@@ -1,5 +1,5 @@
 FROM debian
-RUN apt update && apt install sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
+RUN apt update && apt-get install -y --no-install-recommends sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit
 RUN git clone https://github.com/Ashraf-wan/Corvid
 RUN sudo apt install software-properties-common apt-transport-https curl -y
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
@@ -137,9 +137,13 @@ RUN dpkg -i *.deb
 WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
 CMD start
-# cleanup & adding stuff
+# cleanup & adding new user so vscode dont crash
 RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 WORKDIR "/root"
 RUN useradd -m -p pakXq6/z0Zcdk corvid
+RUN sudo du -h --max-depth=1
+RUN rm -r /tools/LibreOffice_7.2.2.2_Linux_x86-64_deb
+#change wallpaper and theme
+#use the docker commit
