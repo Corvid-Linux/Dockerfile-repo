@@ -1,5 +1,5 @@
 FROM debian
-RUN apt update && apt install --no-install-recommends sudo wget curl neofetch htop screenfetch python git python3-pip gnupg zsh tar locate firefox-esr net-tools liblttng-ust0 unzip make gpg gcc g++ terminator gobuster tty-clock nano vim nmap lynis aircrack-ng apktool gedit -y
+RUN apt update && apt install --no-install-recommends xz-utils sudo wget curl python git python3-pip tar firefox-esr net-tools unzip make gpg gcc g++ gobuster liblttng-ust0 vim nmap lynis aircrack-ng apktool -y
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -72,10 +72,8 @@ RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommend
       libpulse0 \
       procps \
       psmisc \
-      sudo \
       synaptic \
-      systemsettings \
-      pulseaudio
+      systemsettings
 
 WORKDIR "/root"
 RUN mkdir tools
@@ -113,12 +111,21 @@ WORKDIR "LibreOffice_7.2.2.2_Linux_x86-64_deb/DEBS"
 RUN dpkg -i *.deb
 WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
+WORKDIR "/root"
 CMD start
+RUN wget https://drive.google.com/u/0/uc?id=1g7xILUPChm8PeXSJnYvhye8JJljhh2s6&export=download -O Windows-11.tar.xz
+RUN xz -d -v Windows-11.tar.xz
+RUN cd  ~/.local/share && mkdir theme 
+WORKDIR "/root/.local/share/theme"
+RUN mv /root/Windows-11.tar .
+RUN tar -xf Windows-11.tar
 # cleanup & adding stuff
 RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 RUN rm -r LibreOffice_7.2.2.2_Linux_x86-64_deb
+RUN rm /root/.local/share/theme/Windows-11.tar
 WORKDIR "/root"
 RUN useradd -m -p pakXq6/z0Zcdk corvid
 RUN du -h --max-depth=1
+RUN apt purge xz-utils tar unzip gpg
