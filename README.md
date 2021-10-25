@@ -13,7 +13,7 @@ Here are some example snippets to help you get started creating a container.
 ---
 version: "0.5"
 services:
-  webtop:
+  corvid:
     image: parrotsecurity/corvid
     container_name: corvid
     privileged: true #optional
@@ -29,7 +29,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock #optional
     ports:
       - 3000:3000
-    shm_size: "1gb" #optional
     restart: unless-stopped
 ```
 
@@ -37,7 +36,7 @@ services:
 
 ```bash
 docker run -d \
-  --name=webtop \
+  --name=corvid \
   --privileged `#optional` \
   --security-opt seccomp=unconfined `#optional` \
   -e PUID=1000 \
@@ -47,7 +46,6 @@ docker run -d \
   -p 3000:3000 \
   -v /corvid:/root \
   -v /var/run/docker.sock:/var/run/docker.sock `#optional` \
-  --shm-size="1gb" `#optional` \
   --restart unless-stopped \
   parrotsecurity/corvid
 ```
