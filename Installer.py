@@ -8,7 +8,7 @@ def loop():
   elif choice == "none":
     os.system("docker run -it parrotsecurity/corvid:slim-0.5")
   elif choice == "xfce":
-    os.system("docker run -it parrotsecurity/corvid:xfce-0.5")
+    os.system("docker run -it parrotsecurity/corvid")
   elif choice == "kde":
     os.system("docker run -it parrotsecurity/corvid:kde-0.5")
   else:
