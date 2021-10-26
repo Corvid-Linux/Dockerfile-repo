@@ -113,12 +113,6 @@ WORKDIR "/root/tools"
 RUN rm LibreOffice_7.2.2_Linux_x86-64_deb.tar.gz
 WORKDIR "/root"
 CMD start
-RUN wget https://drive.google.com/u/0/uc?id=1g7xILUPChm8PeXSJnYvhye8JJljhh2s6&export=download -O Windows-11.tar.xz
-RUN xz -d -v Windows-11.tar.xz
-RUN cd  ~/.local/share && mkdir theme 
-WORKDIR "/root/.local/share/theme"
-RUN mv /root/Windows-11.tar .
-RUN tar -xf Windows-11.tar
 # cleanup & adding stuff
 RUN apt-get clean
 WORKDIR "/root/tools"
