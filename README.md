@@ -11,7 +11,7 @@ Here are some example snippets to help you get started creating a container.
 
 ```yaml
 ---
-version: "0.5"
+version: "1"
 services:
   corvid:
     image: parrotsecurity/corvid
@@ -49,5 +49,6 @@ docker run -d \
   --restart unless-stopped \
   parrotsecurity/corvid
 ```
+### Screenshots
 
-
+Xfce DE:
