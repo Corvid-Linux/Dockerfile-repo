@@ -1,5 +1,5 @@
 FROM debian
-RUN apt update && apt install --no-install-recommends xz-utils sudo wget curl python git python3-pip tar firefox-esr net-tools unzip make gpg gcc g++ gobuster liblttng-ust0 vim nmap lynis aircrack-ng apktool -y
+RUN apt update && apt install --no-install-recommends sudo wget curl python git python3-pip firefox-esr net-tools unzip make gpg gobuster liblttng-ust0 nmap lynis aircrack-ng apktool -y
 WORKDIR "/"
 RUN apt-get update && apt-mark hold iptables && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -17,25 +17,6 @@ RUN apt-get update && apt-mark hold iptables && \
       xfce4-notifyd \
       xfce4-taskmanager \
       xfce4-terminal && \
-    env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      xfce4-battery-plugin \
-      xfce4-clipman-plugin \
-      xfce4-cpufreq-plugin \
-      xfce4-cpugraph-plugin \
-      xfce4-diskperf-plugin \
-      xfce4-datetime-plugin \
-      xfce4-fsguard-plugin \
-      xfce4-genmon-plugin \
-      xfce4-indicator-plugin \
-      xfce4-netload-plugin \
-      xfce4-places-plugin \
-      xfce4-sensors-plugin \
-      xfce4-smartbookmark-plugin \
-      xfce4-systemload-plugin \
-      xfce4-timer-plugin \
-      xfce4-verve-plugin \
-      xfce4-weather-plugin \
-      xfce4-whiskermenu-plugin && \
     env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
       libxv1 \
       mesa-utils \
@@ -67,7 +48,6 @@ startxfce4\n\
 chmod +x /usr/local/bin/start
 
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-      kwrite \
       libcups2 \
       libpulse0 \
       procps \
@@ -118,8 +98,6 @@ RUN apt-get clean
 WORKDIR "/root/tools"
 RUN rm powershell_7.1.5-1.debian.10_amd64.deb
 RUN rm -r LibreOffice_7.2.2.2_Linux_x86-64_deb
-RUN rm /root/.local/share/theme/Windows-11.tar
 WORKDIR "/root"
 RUN useradd -m -p pakXq6/z0Zcdk corvid
 RUN du -h --max-depth=1
-RUN apt purge xz-utils tar unzip gpg
