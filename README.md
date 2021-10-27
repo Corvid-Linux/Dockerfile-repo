@@ -11,7 +11,7 @@ Here are some example snippets to help you get started creating a container.
 
 ```yaml
 ---
-version: "1"
+version: "0.9"
 services:
   corvid:
     image: parrotsecurity/corvid
@@ -25,7 +25,7 @@ services:
       - TZ=Europe/London
       - SUBFOLDER=/ #optional
     volumes:
-      - /corvid:/root
+      - /corvid:/home/corvid
       - /var/run/docker.sock:/var/run/docker.sock #optional
     ports:
       - 3000:3000
@@ -44,7 +44,7 @@ docker run -d \
   -e TZ=Europe/London \
   -e SUBFOLDER=/ `#optional` \
   -p 3000:3000 \
-  -v /corvid:/root \
+  -v /corvid:/home/corvid \
   -v /var/run/docker.sock:/var/run/docker.sock `#optional` \
   --restart unless-stopped \
   parrotsecurity/corvid
