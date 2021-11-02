@@ -3,5 +3,5 @@ NAME="Corvid GNU/Linux"
 ID=debian
 ANSI_COLOR="1;31"
 HOME_URL="https://ashraf-wan.github.io/Corvid/"
-SUPPORT_URL="https://ashraf-wan.github.io/Corvid/suppor"
+SUPPORT_URL="https://ashraf-wan.github.io/Corvid/support"
 BUG_REPORT_URL="https://ashraf-wan.github.io/Corvid/bugs"
