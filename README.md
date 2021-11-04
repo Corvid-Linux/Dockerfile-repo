@@ -3,52 +3,12 @@
 [![Discord](https://img.shields.io/discord/902002814656606249?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Discord&logo=discord)](https://discord.gg/7JVx2jbweN "realtime support / chat with the community and the team.")
 [![GitHub](https://img.shields.io/static/v1.svg?color=94398d&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=Ashraf-wan&message=GitHub&logo=github)](https://github.com/Ashraf-wan "view the source for all of our repositories.")
 
-## Usage
+## Running Container
 
-Here are some example snippets to help you get started creating a container.
-
-### docker-compose (recommended, [click here for more info](https://docs.linuxserver.io/general/docker-compose))
-
-```yaml
----
-version: "0.9"
-services:
-  corvid:
-    image: parrotsecurity/corvid
-    container_name: corvid
-    privileged: true #optional
-    security_opt:
-      - seccomp:unconfined #optional
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - SUBFOLDER=/ #optional
-    volumes:
-      - /corvid:/home/corvid
-      - /var/run/docker.sock:/var/run/docker.sock #optional
-    ports:
-      - 3000:3000
-    restart: unless-stopped
 ```
-
-### docker cli ([click here for more info](https://docs.docker.com/engine/reference/commandline/cli/))
-
-```bash
-docker run -d \
-  --name=corvid \
-  --privileged `#optional` \
-  --security-opt seccomp=unconfined `#optional` \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Europe/London \
-  -e SUBFOLDER=/ `#optional` \
-  -p 3000:3000 \
-  -v /corvid:/home/corvid \
-  -v /var/run/docker.sock:/var/run/docker.sock `#optional` \
-  --restart unless-stopped \
-  parrotsecurity/corvid
+git clone https://github.com/Corvid-Linux/Dockerfile-repo
+cd Dockerfile-repo
+docker build -t corvidlinux .
+docker run -it -d --name=corvid corvidlinux /bin/bash
+docker exec -it corvid bash
 ```
-### Screenshots
-
-Xfce DE:
