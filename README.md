@@ -8,7 +8,5 @@
 ```
 git clone https://github.com/Corvid-Linux/Dockerfile-repo
 cd Dockerfile-repo
-docker build -t corvidlinux .
-docker run -it -d --name=corvid corvidlinux /bin/bash
-docker exec -it corvid bash
+python installer.py
 ```
