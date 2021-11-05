@@ -8,5 +8,5 @@
 ```
 git clone https://github.com/Corvid-Linux/Dockerfile-repo
 cd Dockerfile-repo
-python installer.py
+python Installer.py
 ```
